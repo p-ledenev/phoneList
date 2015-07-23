@@ -1,5 +1,3 @@
-package model;
-
 import java.util.*;
 
 /**
@@ -9,7 +7,7 @@ import java.util.*;
 public class Node {
 
     private List<Node> children;
-    private int digit;
+    private Integer digit;
 
     public Node() {
         children = new ArrayList<Node>();

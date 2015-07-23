@@ -1,5 +1,3 @@
-package model;
-
 import java.util.*;
 import java.util.concurrent.*;
 
@@ -9,12 +7,11 @@ import java.util.concurrent.*;
 public class ConsistentPhoneListTask implements Callable<TaskResult> {
 
     List<String> phones;
-    List<Node> trees;
+    Node heap;
 
     public ConsistentPhoneListTask(List<String> phones) {
         this.phones = phones;
-
-        trees = new ArrayList<Node>();
+        heap = new Node();
     }
 
     public TaskResult call() throws Exception {
@@ -26,10 +23,8 @@ public class ConsistentPhoneListTask implements Callable<TaskResult> {
             if (!iterator.hasNextDigit())
                 continue;
 
-            Node node = findTreeFor(iterator.nextDigit());
-
             try {
-                node.process(iterator);
+                heap.process(iterator);
 
             } catch (ListInconsistentFailure e) {
                 return TaskResult.no(e.getMessage());
@@ -37,18 +32,5 @@ public class ConsistentPhoneListTask implements Callable<TaskResult> {
         }
 
         return TaskResult.yes();
-    }
-
-    private Node findTreeFor(int digit) {
-        for (Node node : trees) {
-            if (node.hasDigit(digit)) {
-                return node;
-            }
-        }
-
-        Node node = new Node(digit);
-        trees.add(node);
-
-        return node;
     }
 }

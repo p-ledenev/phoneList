@@ -11,9 +11,9 @@ import java.util.concurrent.*;
  */
 public class Reader {
 
-    public List<FutureTask> read(String fileName) throws Throwable {
+    public List<FutureTask> readStandardInputStream() throws Throwable {
 
-        BufferedReader reader = new BufferedReader(new FileReader(new File(fileName)));
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
         int length = Integer.parseInt(reader.readLine());
         List<FutureTask> tasks = new ArrayList<FutureTask>(length);
